@@ -3,6 +3,7 @@ import sys
 import os
 
 from .lib import git_clean
+from .lib import git_clean_remote
 
 def print_version(ctx, param, value):
     if not value or ctx.resilient_parsing:
@@ -22,3 +23,10 @@ def cli():
 def clean(head, path):
     """Remove uneeded branches"""
     git_clean.execute(path, head)
+
+
+@cli.command("clean-remote")
+@click.argument('path', envvar='PWD', type=click.Path(exists=True))
+def clean_remote(path):
+    """Remove uneeded branches"""
+    git_clean_remote.execute(path)
